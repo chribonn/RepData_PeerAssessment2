@@ -150,7 +150,7 @@ maxr <- order(maxs$Amount, decreasing = TRUE)[1]
 ```
 
 
-From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **`r data2[maxr, "EventType"]`**.
+From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **`r maxs[maxr, "EventType"]`**.
 
 The table of the recategorised data is shown hereunder
 
@@ -210,11 +210,24 @@ p + ggtitle("Economic Costs by Event Type") + xlab("Event Category") + ylab("Cos
 ```
 
 ```{r FindMaxPropCrop, echo=FALSE,results='hide'}
-max2s <- aggregate(Amount ~ EventType, data = data3, FUN = max)
-max2r <- order(maxs$Amount, decreasing = TRUE)[1]
+maxs <- aggregate(Amount ~ EventType, data = data3, FUN = max)
+maxr <- order(maxs$Amount, decreasing = TRUE)[1]
 ```
 
 
-From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **`r data3[max2r, "EventType"]`**.
+From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **`r maxs[maxr, "EventType"]`**.
 
 The table of the recategorised data is shown hereunder
+
+
+```{r FindSumPropCrop, echo=FALSE}
+sums <- aggregate(Amount ~ EventType, data = data3, FUN = sum)
+sums[order(sums$Amount),]
+```
+\newpage
+
+## Reproducable Research
+
+In line with good data sciences practice the code and data from which this report has been generated are available for download by anyone who would like to verify the data and the algortihms used to get to the answers. 
+
+This is available at https://github.com/chribonn/RepData_PeerAssessment2.

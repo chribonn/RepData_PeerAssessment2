@@ -23,7 +23,7 @@ The purpose of this report is to answer the following questions:
 
 This project involves exploring the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database. This database tracks characteristics of major storms and weather events in the United States, including when and where they occur, as well as estimates of any fatalities, injuries, and property damage.
 
-The data used is this analysis was downloaded from https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2. It was downloaded on **Aug 18 2014 at 13:46:13**.
+The data used is this analysis was downloaded from https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2. It was downloaded on **Aug 19 2014 at 14:02:33**.
 
 
 
@@ -427,6 +427,24 @@ unique(data3$EVTYPE)
 
 
 
-From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **WIND**.
+From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **WATER**.
 
 The table of the recategorised data is shown hereunder
+
+
+
+```
+##       EventType    Amount
+## 5     LIGNTNING 5.000e+03
+## 1     AVALANCHE 8.722e+06
+## 6         OTHER 9.412e+06
+## 7    VISIBILITY 2.293e+07
+## 3          LAND 4.929e+08
+## 4      LIGHTING 9.426e+08
+## 2          FIRE 8.905e+09
+## 10  WEATHER-HOT 1.593e+10
+## 9  WEATHER-COLD 2.612e+10
+## 11         WIND 1.601e+11
+## 8         WATER 2.648e+11
+```
+\newpage
