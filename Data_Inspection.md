@@ -153,7 +153,7 @@ unique(data2$EVTYPE)
 ## [205] "TSUNAMI"
 ```
 
-After the list was consolidated, the number of groupings are the following:
+The list was consolidated. For an explanation of the consolidation process look up [*Appendix A*](#AppendixA) of this report. After consolidation the groupings are as follows:
 
 
 ```r
@@ -172,7 +172,7 @@ unique(data2$EVTYPE)
 
 
 
-From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **WIND**.
+From the chart it is clearly visible that the event that costs the most in terms of harmful events to humans are those classified under **WIND**.
 
 The table of the recategorised data is shown hereunder
 
@@ -407,7 +407,7 @@ unique(data3$EVTYPE)
 ## [397] "RIP CURRENT"
 ```
 
-After the list was consolidated, the number of groupings are the following:
+The list was consolidated. For an explanation of the consolidation process look up [*Appendix A*](#AppendixA) of this report. After consolidation the groupings are as follows:
 
 
 ```r
@@ -427,7 +427,7 @@ unique(data3$EVTYPE)
 
 
 
-From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **WATER**.
+From the chart it is clearly visible that the event that costs the most in terms of harmful events to humans are those classified under **WATER**.
 
 The table of the recategorised data is shown hereunder
 
@@ -448,3 +448,33 @@ The table of the recategorised data is shown hereunder
 ## 8         WATER 2.648e+11
 ```
 \newpage
+
+## Reproducable Research
+
+In line with good data sciences practice the code and data from which this report has been generated are available for download by anyone who would like to verify the data and the algorithms used to get to the answers. 
+
+This is available at https://github.com/chribonn/RepData_PeerAssessment2.
+
+\newpage
+
+<a name="AppendixA"></a>
+
+## Appendix A
+
+Below is a table of how the Event Types where consolidated into a smaller group. When an Event Type matched (partially or fully) a term under *srch* it was replaced by the term under *repl*. Case was ignored.
+
+
+|srch                                                                                                                                                                                                                                                     |repl         |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------|
+|COASTAL SURGE or MIXED PRECIP or SEICHE or DOWNBURST or WETNESS or STREAM or PRECIPITATION or SHOWER or TIDE or RAIN or DROWNING or FLOOD or SURF or STORM or WAVE or WATER or CURRENTS or WATERSPOUT or MARINE or SEA or SWELL or STREAM FLD or CURRENT |WATER        |
+|AVAL                                                                                                                                                                                                                                                     |AVALANCHE    |
+|ICE or SNOW or BLIZZARD or FREEZ or FROST or HAIL or HYPOTHERMIA or COLD or LOW TEMPERATURE or SLEET or ICY or HYPERTHERMIA or WINTRY or WINTER                                                                                                          |WEATHER-COLD |
+|DUST or WIND or TYPHOON or TORNADO or HURRICANE or FUNNEL or MICROBURST or GUSTNADO or TORNDAO or TROPICAL or TURBULENCE or LANDSPOUT                                                                                                                    |WIND         |
+|FOG or DENSE SMOKE                                                                                                                                                                                                                                       |VISIBILITY   |
+|HEAT or WARM or HOT or DROUGHT                                                                                                                                                                                                                           |WEATHER-HOT  |
+|FIRE                                                                                                                                                                                                                                                     |FIRE         |
+|LIGHTING or LIGHTNING or TSTM or LIGHTING                                                                                                                                                                                                                |LIGHTING     |
+|MUD or LANDSLIDES or EROSION or ROCK SLIDE or VOLCANIC ASH or LANDSLUMP or LANDSLIDE or TSUNAMI                                                                                                                                                          |LAND         |
+|HIGH or APACHE COUNTY or DAM BREAK or URBAN or GLAZE or HEAVY MIX or COOL AND WET or \?                                                                                                                                                                  |OTHER        |
+
+

@@ -4,35 +4,38 @@ title: Economic and Life-Threatening Events as a result of Storm Activities in t
 author: "Alan C Bonnici"
 date: "Monday, August 18, 2014"
 output:
+  pdf_document: default
   html_document:
     keep_md: yes
 ---
 ```{r supportFunctions, echo=FALSE, results='hide'}
+# Global variables used in a number of places
+srch <- c("COASTAL SURGE|MIXED PRECIP|SEICHE|DOWNBURST|WETNESS|STREAM|PRECIPITATION|SHOWER|TIDE|RAIN|DROWNING|FLOOD|SURF|STORM|WAVE|WATER|CURRENTS|WATERSPOUT|MARINE|SEA|SWELL|STREAM FLD|CURRENT",
+          "AVAL",
+          "ICE|SNOW|BLIZZARD|FREEZ|FROST|HAIL|HYPOTHERMIA|COLD|LOW TEMPERATURE|SLEET|ICY|HYPERTHERMIA|WINTRY|WINTER",
+          "DUST|WIND|TYPHOON|TORNADO|HURRICANE|FUNNEL|MICROBURST|GUSTNADO|TORNDAO|TROPICAL|TURBULENCE|LANDSPOUT",
+          "FOG|DENSE SMOKE",
+          "HEAT|WARM|HOT|DROUGHT",
+          "FIRE",
+          "LIGHTING|LIGHTNING|TSTM|LIGHTING",
+          "MUD|LANDSLIDES|EROSION|ROCK SLIDE|VOLCANIC ASH|LANDSLUMP|LANDSLIDE|TSUNAMI",
+          "HIGH|APACHE COUNTY|DAM BREAK|URBAN|GLAZE|HEAVY MIX|COOL AND WET|\\?")
+
+repl <- c("WATER",
+          "AVALANCHE",
+          "WEATHER-COLD",
+          "WIND",
+          "VISIBILITY",
+          "WEATHER-HOT",
+          "FIRE",
+          "LIGHTING",
+          "LAND",
+          "OTHER")
+
 cleanEVTYPE <- function(df) {
     # unfactor the EVTYPE
     df$EVTYPE <- as.character(df$EVTYPE)
     
-    srch <- c("COASTAL SURGE|MIXED PRECIP|SEICHE|DOWNBURST|WETNESS|STREAM|PRECIPITATION|SHOWER|TIDE|RAIN|DROWNING|FLOOD|SURF|STORM|WAVE|WATER|CURRENTS|WATERSPOUT|MARINE|SEA|SWELL|STREAM FLD|CURRENT",
-              "AVAL",
-              "ICE|SNOW|BLIZZARD|FREEZ|FROST|HAIL|HYPOTHERMIA|COLD|LOW TEMPERATURE|SLEET|ICY|HYPERTHERMIA|WINTRY|WINTER",
-              "DUST|WIND|TYPHOON|TORNADO|HURRICANE|FUNNEL|MICROBURST|GUSTNADO|TORNDAO|TROPICAL|TURBULENCE|LANDSPOUT",
-              "FOG|DENSE SMOKE",
-              "HEAT|WARM|HOT|DROUGHT",
-              "FIRE",
-              "LIGHTING|LIGHTNING|TSTM|LIGHTING",
-              "MUD|LANDSLIDES|EROSION|ROCK SLIDE|VOLCANIC ASH|LANDSLUMP|LANDSLIDE|TSUNAMI",
-              "HIGH|APACHE COUNTY|DAM BREAK|URBAN|GLAZE|HEAVY MIX|COOL AND WET|\\?")
-    
-    repl <- c("WATER",
-              "AVALANCHE",
-              "WEATHER-COLD",
-              "WIND",
-              "VISIBILITY",
-              "WEATHER-HOT",
-              "FIRE",
-              "LIGHTING",
-              "LAND",
-              "OTHER")
     
     for (i in 1:length(srch)) {
         x <- grepl(srch[i], df$EVTYPE, ignore.case = TRUE)
@@ -46,13 +49,14 @@ cleanEVTYPE <- function(df) {
 
 ```{r loadLibraries, echo=FALSE, results='hide'}
 # Install and load libraries used here
-for (x in c("ggplot2","reshape")) {
+for (x in c("ggplot2","reshape","knitr")) {
     if (x %in% rownames(installed.packages()) == FALSE) {
         install.packages(x)
         }
     }
 library(ggplot2)
 library(reshape)
+library(knitr)
 ```
 
 ## Introduction
@@ -129,7 +133,7 @@ The Event Type description (*EVTYPE*) was not coded against a fixed list. This m
 unique(data2$EVTYPE)
 ```
 
-After the list was consolidated, the number of groupings are the following:
+The list was consolidated. For an explanation of the consolidation process look up [*Appendix A*](#AppendixA) of this report. After consolidation the groupings are as follows:
 
 ```{r cleanInjFat}
 data2 <- cleanEVTYPE(data2)
@@ -150,7 +154,7 @@ maxr <- order(maxs$Amount, decreasing = TRUE)[1]
 ```
 
 
-From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **`r maxs[maxr, "EventType"]`**.
+From the chart it is clearly visible that the event that costs the most in terms of harmful events to humans are those classified under **`r maxs[maxr, "EventType"]`**.
 
 The table of the recategorised data is shown hereunder
 
@@ -194,7 +198,7 @@ The Event Type description (*EVTYPE*) was not coded against a fixed list. This m
 unique(data3$EVTYPE)
 ```
 
-After the list was consolidated, the number of groupings are the following:
+The list was consolidated. For an explanation of the consolidation process look up [*Appendix A*](#AppendixA) of this report. After consolidation the groupings are as follows:
 
 ```{r cleanPropCrop}
 data3 <- cleanEVTYPE(data3)
@@ -215,7 +219,7 @@ maxr <- order(maxs$Amount, decreasing = TRUE)[1]
 ```
 
 
-From the chart it is clearly visble that the event that costs the most in terms of harmful events to humans are those classified under **`r maxs[maxr, "EventType"]`**.
+From the chart it is clearly visible that the event that costs the most in terms of harmful events to humans are those classified under **`r maxs[maxr, "EventType"]`**.
 
 The table of the recategorised data is shown hereunder
 
@@ -228,6 +232,22 @@ sums[order(sums$Amount),]
 
 ## Reproducable Research
 
-In line with good data sciences practice the code and data from which this report has been generated are available for download by anyone who would like to verify the data and the algortihms used to get to the answers. 
+In line with good data sciences practice the code and data from which this report has been generated are available for download by anyone who would like to verify the data and the algorithms used to get to the answers. 
 
 This is available at https://github.com/chribonn/RepData_PeerAssessment2.
+
+\newpage
+
+<a name="AppendixA"></a>
+
+## Appendix A
+
+Below is a table of how the Event Types where consolidated into a smaller group. When an Event Type matched (partially or fully) a term under *srch* it was replaced by the term under *repl*. Case was ignored.
+
+```{r srchRepl, echo=FALSE, results='asis'}
+tmp <- data.frame(srch = gsub("\\|", " or ", srch), repl = repl)
+
+kable(tmp, format = "markdown")
+```
+
+
